@@ -1,12 +1,13 @@
 class Oystercard
   attr_reader :balance
   MAXBALANCE = 90
+  MINBALANCE = 1
   def initialize
     @balance = 0
   end
 
   def topup(amount)
-    fail "The limit of" + "#{MAXBALANCE}" + "has been reached." if @balance + amount > MAXBALANCE
+    fail "The limit of #{MAXBALANCE} has been reached." if @balance + amount > MAXBALANCE
     @balance += amount
   end
 
@@ -15,14 +16,15 @@ class Oystercard
   end
 
   def in_journey?
-    false
+    @commuting
   end
 
-  # def touch_in
-  #   @commuting = true
-  # end
-  #
-  # def touch_out
-  #   @commuting = false
-  # end
+  def touch_in
+    fail 'Cannot travel: insufficient funds' if @balance < MINBALANCE
+    @commuting = true
+  end
+
+  def touch_out
+    @commuting = false
+  end
 end
