@@ -10,22 +10,22 @@ describe Oystercard do
     end
   end
 
-  describe '#topup' do
-    it { is_expected.to respond_to(:topup).with(1).argument }
+  describe '#top_up' do
+    it { is_expected.to respond_to(:top_up).with(1).argument }
     it 'should top up 10£' do
-      expect{(oystercard.topup(10))}.to change{ oystercard.balance }.to(10)
+      expect{(oystercard.top_up(10))}.to change{ oystercard.balance }.to(10)
     end
     it 'raises and error if the maximum balance is exceeded' do
       max_balance = Oystercard::MAXBALANCE
-      oystercard.topup(max_balance)
-      expect {oystercard.topup(1)}.to raise_error ("The limit of #{max_balance} has been reached.")
+      oystercard.top_up(max_balance)
+      expect {oystercard.top_up(1)}.to raise_error ("The limit of #{max_balance} has been reached.")
     end
   end
 
   describe '#deduct' do
     it { is_expected.to respond_to(:deduct).with(1).argument }
     it 'should deduct 10£ from the balance' do
-      oystercard.topup(50)
+      oystercard.top_up(50)
       expect{(oystercard.deduct(10))}.to change{oystercard.balance}.to(40)
     end
   end
@@ -40,12 +40,12 @@ describe Oystercard do
   describe '#touch_in' do
     it { is_expected.to respond_to(:touch_in)}
     it 'should let a passenger touch in' do
-      oystercard.topup(1.5)
+      oystercard.top_up(1.5)
       oystercard.touch_in
       expect(oystercard).to be_in_journey
     end
     it 'should raise an error when not enough funds' do
-      oystercard.topup(0.5)
+      oystercard.top_up(0.5)
       expect {oystercard.touch_in}.to raise_error('Cannot travel: insufficient funds')
     end
   end
@@ -53,10 +53,11 @@ describe Oystercard do
   describe '#touch_out' do
     it { is_expected.to respond_to(:touch_out)}
     it 'should let a passenger touch out' do
-      oystercard.topup(1.5)
+      oystercard.top_up(1.5)
       oystercard.touch_in
       oystercard.touch_out
       expect(oystercard).not_to be_in_journey
+      expect {oystercard.touch_out}.to change{oystercard.balance}.by(-Oystercard::MINBALANCE)
     end
   end
 

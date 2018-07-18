@@ -6,7 +6,7 @@ class Oystercard
     @balance = 0
   end
 
-  def topup(amount)
+  def top_up(amount)
     fail "The limit of #{MAXBALANCE} has been reached." if @balance + amount > MAXBALANCE
     @balance += amount
   end
@@ -25,6 +25,7 @@ class Oystercard
   end
 
   def touch_out
+    self.deduct(MINBALANCE)
     @commuting = false
   end
 end
