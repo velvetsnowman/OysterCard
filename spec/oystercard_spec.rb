@@ -21,7 +21,7 @@ describe Oystercard do
 
   describe '#top_up' do
     it { is_expected.to respond_to(:top_up).with(1).argument }
-    it 'should top up 10£' do
+    it 'should top up £10' do
       expect{(oystercard.top_up(10))}.to change{ oystercard.balance }.to(10)
     end
     it 'raises and error if the maximum balance is exceeded' do

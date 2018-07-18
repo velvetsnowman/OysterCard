@@ -1,3 +1,4 @@
+require_relative 'station'
 class Oystercard
   attr_reader :balance, :entry_station
   MAXBALANCE = 90
