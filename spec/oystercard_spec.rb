@@ -12,7 +12,6 @@ describe Oystercard do
     end
   end
   describe '#entry_station' do
-    it { is_expected.to respond_to(:entry_station)}
     it 'saves the station you enter in' do
       oystercard.top_up(10)
       expect(oystercard.touch_in(entry_station)).to eq entry_station
@@ -61,7 +60,7 @@ describe Oystercard do
       oystercard.touch_in(entry_station)
       oystercard.touch_out(exit_station)
       expect(oystercard).not_to be_in_journey
-      expect {oystercard.touch_out(exit_station)}.to change{oystercard.balance}.by(-Oystercard::MINBALANCE)
+      expect {oystercard.touch_out(exit_station)}.to change{oystercard.balance}.by(-Oystercard::MINFARE)
     end
   end
 

@@ -1,11 +1,11 @@
-require_relative 'station'
+require_relative 'journey'
 class Oystercard
-  attr_reader :balance, :entry_station
   MAXBALANCE = 90
-  MINBALANCE = 1
-  def initialize
+  MINFARE = 1
+  attr_reader :balance
+  def initialize(journey = Journey)
+    @journey = journey.new
     @balance = 0
-    @history = []
   end
 
   def top_up(amount)
@@ -14,25 +14,21 @@ class Oystercard
   end
 
   def in_journey?
-    !!@entry_station
+    @journey.in_journey?
   end
 
   def touch_in(entry_station)
-    fail 'Cannot travel: insufficient funds' if @balance < MINBALANCE
-    @entry_station = entry_station
+    fail 'Cannot travel: insufficient funds' if @balance < MINFARE
+    @journey.touch_in(entry_station)
   end
 
   def touch_out(exit_station)
-    deduct(MINBALANCE)
-    @exit_station = exit_station
-    @history << {:entry => @entry_station, :exit => @exit_station}
-    @entry_station = nil
+    deduct(MINFARE)
+    @journey.touch_out(exit_station)
   end
 
   def history
-    @history.each do |hash|
-      puts "#{hash[:entry]} - #{hash[:exit]}"
-    end
+    @journey.history
   end
 
   private
