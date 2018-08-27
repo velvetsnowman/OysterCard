@@ -11,9 +11,7 @@ Your task is to build an Oyster Card command line app using the below user stori
   <dd>Most code in the world is structured in small pieces called objects. This is done because it is easier to change than having everything in one place.</dd>
 </dl>
 
-## Weekly challenge user stories
-
-Here are the user stories you will be working on for this project:
+## User stories
 
 ```
 In order to use public transport
