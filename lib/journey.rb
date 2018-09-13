@@ -1,5 +1,6 @@
 class Journey
-  attr_reader :entry_station
+  attr_reader :entry_station,
+              :exit_station
   def initialize
     @history = []
   end
@@ -16,6 +17,7 @@ class Journey
     @exit_station = exit_station
     @history << {:entry => @entry_station, :exit => @exit_station}
     @entry_station = nil
+    @exit_station = nil
   end
 
   def history

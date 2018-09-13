@@ -1,10 +1,13 @@
 require_relative 'journey'
 class Oystercard
+
   MAXBALANCE = 90
   MINFARE = 1
+
   attr_reader :balance
-  def initialize(journey = Journey)
-    @journey = journey.new
+
+  def initialize
+    @journey = Journey.new
     @balance = 0
   end
 
@@ -18,13 +21,21 @@ class Oystercard
   end
 
   def touch_in(entry_station)
+    if in_journey? == true
+      deduct(6)
+      touch_out
+    end
     fail 'Cannot travel: insufficient funds' if @balance < MINFARE
     @journey.touch_in(entry_station)
   end
 
-  def touch_out(exit_station)
-    deduct(MINFARE)
-    @journey.touch_out(exit_station)
+  def touch_out(exit_station = "nil")
+    if exit_station == "nil"
+      @journey.touch_out(exit_station)
+    else
+      deduct(1)
+      @journey.touch_out(exit_station)
+    end
   end
 
   def history
@@ -32,7 +43,9 @@ class Oystercard
   end
 
   private
+
   def deduct(amount)
     @balance -= amount
   end
+
 end
