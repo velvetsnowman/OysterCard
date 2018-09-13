@@ -20,21 +20,23 @@ class Oystercard
     @journey.in_journey?
   end
 
-  def touch_in(entry_station)
+  def touch_in(entry_station, entry_zone)
+    @entry_zone = entry_zone
     if in_journey? == true
-      deduct(6)
+      deduct(fare)
       touch_out
     end
     fail 'Cannot travel: insufficient funds' if @balance < MINFARE
     @journey.touch_in(entry_station)
   end
 
-  def touch_out(exit_station = "nil")
-    if exit_station == "nil"
+  def touch_out(exit_station = "incomplete", exit_zone = 100)
+    @exit_zone = exit_zone
+    if exit_station == "incomplete"
       @journey.touch_out(exit_station)
     else
-      deduct(1)
       @journey.touch_out(exit_station)
+      deduct(fare)
     end
   end
 
@@ -46,6 +48,25 @@ class Oystercard
 
   def deduct(amount)
     @balance -= amount
+  end
+
+  def fare
+    if in_journey? == true
+      6
+    else
+      zone_calculator(@entry_zone - @exit_zone)
+    end
+  end
+
+  def zone_calculator(zone_difference)
+    case zone_difference.abs
+    when 1
+      2
+    when 2
+      3
+    else
+      1
+    end
   end
 
 end
