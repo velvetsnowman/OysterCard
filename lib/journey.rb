@@ -21,8 +21,8 @@ class Journey
   end
 
   def history
-    @history.each do |hash|
-      puts "#{hash[:entry]} - #{hash[:exit]}"
+    @history.each do |journey|
+      puts "#{journey[:entry]} -> #{journey[:exit]}"
     end
   end
 

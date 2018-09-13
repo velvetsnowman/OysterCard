@@ -87,7 +87,7 @@ describe Oystercard do
       oystercard.top_up(1.5)
       oystercard.touch_in('abc', 1)
       oystercard.touch_out('def', 1)
-      expect{oystercard.history}.to output("abc - def\n").to_stdout
+      expect{oystercard.history}.to output("abc -> def\n").to_stdout
     end
   end
 end

@@ -1,15 +1,35 @@
-# Oystercard Challenge
+## How to interact with my code
 
-Your task is to build an Oyster Card command line app using the below user stories as guidance. This should really stretch your skills in Ruby, TDD and object-oriented design.
+* Fork this repo and clone
+* Navigate to the root directory using your terminal.
 
-<dl>
-  <dt>I write code that is easy to change</dt>
-  <dd>Writing easy to change software is highly prized amongst developers and employers. By developers because most of a developer's time is spent changing software. By employers because their teams can deliver value to customers faster.</dd>
-  <dt>I can test-drive my code</dt>
-  <dd>Tested software is easier to change because you can tell when it's broken just by running a command, even the tricky edge cases.</dd>
-  <dt>I can build with objects</dt>
-  <dd>Most code in the world is structured in small pieces called objects. This is done because it is easier to change than having everything in one place.</dd>
-</dl>
+```
+* bundle install
+* irb
+* require './lib/airport.rb'
+* card = Oystercard.new
+```
+* This will create a card for you to travel with
+```
+* card.top_up(10)
+* card.touch_in("Bank", 1)
+* card.touch_out("Clapham Junction", 2)
+```
+* View your balance
+```
+card.balance
+```
+```
+card.history
+```
+* You should see something like this
+```
+Bank -> Clapham Junction
+```
+* For testing please run
+```
+* rspec
+```
 
 ## User stories
 
